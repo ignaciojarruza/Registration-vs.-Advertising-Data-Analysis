@@ -16,8 +16,10 @@ class Event:
     
 # Event Dataframe Gathering
 event_file_path = 'registration-data.xlsx'
+advertising_file_path = 'advertising-data.xlsx'
 event_data = pd.read_excel(event_file_path, sheet_name='Events')
 newsletter_data = pd.read_excel(event_file_path, sheet_name='Newsletter')
+advertising_data = pd.read_excel(advertising_file_path)
 
 #Iterate through Registration Sheets
 folder_path = './registration-sheets'
@@ -29,7 +31,7 @@ for file_name in os.listdir(folder_path):
         event_name = excel_file_name.replace('-', ' ')
         print(registration_data.head())
         # Dataframes available: event_data, newsletter_data and registration_data
-        # Plotting Data
+        # Plotting Data: registration_data
         plt.figure(figsize=(10, 6))
         plt.plot(
                 registration_data['Date-Created'],
@@ -39,6 +41,11 @@ for file_name in os.listdir(folder_path):
                 color="blue",
                 label="Registrations",
             )
+        
+        #Plotting Data: advertising_data
+        event_advertising = advertising_data[advertising_data["Event"] == event_name]
+        for ad_date in event_advertising["Dates"]:
+            plt.axvline(x=ad_date, color="red", linestyle="--", label="Advertising Date")
         # Customize the plot
         plt.title(f"{event_name}")
         plt.xlabel('Date')
