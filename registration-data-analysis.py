@@ -29,7 +29,6 @@ for file_name in os.listdir(folder_path):
         excel_file_name = os.path.splitext(file_name)[0]
         registration_data = pd.read_excel(f"{folder_path}/{excel_file_name}.xlsx")
         event_name = excel_file_name.replace('-', ' ')
-        print(registration_data.head())
         # Dataframes available: event_data, newsletter_data and registration_data
         # Plotting Data: registration_data
         plt.figure(figsize=(10, 6))
@@ -46,8 +45,21 @@ for file_name in os.listdir(folder_path):
         event_advertising = advertising_data[advertising_data["Event"] == event_name]
         for ad_date in event_advertising["Dates"]:
             plt.axvline(x=ad_date, color="red", linestyle="--", label="Advertising Date")
+
+        #Plotting Data: newsletter_data
+        newsletter_dates = newsletter_data[newsletter_data["Event-Advertised"] == event_name]
+        for date_value in newsletter_dates["Newsletter-Date"]:
+            plt.axvline(x=date_value, color="purple", linestyle="--", label="Newsletter Advertised Date")
+
         # Customize the plot
-        plt.title(f"{event_name}")
+        currentEvent = event_data[event_data["Event"] == event_name]
+        #Plotting Data: Event Date
+        for e in currentEvent["Date"]:
+            plt.axvline(e, color="black", linestyle="-", label="Event Date")
+        
+        
+        # RIGHT
+        plt.title(f'{event_name} | {currentEvent["Modality"].values[0]} | Reg: {currentEvent["Registered"].values[0]} | Att: {currentEvent["Attended"].values[0]} | Rate: {currentEvent["Attended"].values[0] / currentEvent["Registered"].values[0]}')
         plt.xlabel('Date')
         plt.ylabel('# of Registrations')
         plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
