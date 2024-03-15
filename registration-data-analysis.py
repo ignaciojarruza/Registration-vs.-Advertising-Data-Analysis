@@ -25,5 +25,26 @@ folder_path = './registration-sheets'
 for file_name in os.listdir(folder_path):
     if file_name.endswith('.xlsx'):
         excel_file_name = os.path.splitext(file_name)[0]
+        registration_data = pd.read_excel(f"{folder_path}/{excel_file_name}.xlsx")
         event_name = excel_file_name.replace('-', ' ')
-        print(event_name)
+        print(registration_data.head())
+        # Dataframes available: event_data, newsletter_data and registration_data
+        # Plotting Data
+        plt.figure(figsize=(10, 6))
+        plt.plot(
+                registration_data['Date-Created'],
+                range(len(registration_data['Date-Created'])),
+                marker=".",
+                linestyle="-",
+                color="blue",
+                label="Registrations",
+            )
+        # Customize the plot
+        plt.title(f"{event_name}")
+        plt.xlabel('Date')
+        plt.ylabel('# of Registrations')
+        plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
+
+        # Show plot
+        plt.tight_layout()  # Adjust layout to prevent clipping of labels
+        plt.show()
