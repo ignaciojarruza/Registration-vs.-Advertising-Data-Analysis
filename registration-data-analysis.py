@@ -1,8 +1,6 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-import numpy as np
-from datetime import datetime
 
 class Event:
     def __init__(self, name, registered, attended, modality):
