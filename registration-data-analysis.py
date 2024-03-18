@@ -57,7 +57,8 @@ for file_name in os.listdir(folder_path):
         
         
         # RIGHT
-        plt.title(f'{event_name} | {currentEvent["Modality"].values[0]} | Reg: {currentEvent["Registered"].values[0]} | Att: {currentEvent["Attended"].values[0]} | Rate: {currentEvent["Attended"].values[0] / currentEvent["Registered"].values[0]}')
+        print(event_name)
+        plt.title(f'{event_name} | {currentEvent["Modality"].values[0]} | Reg: {currentEvent["Registered"].values[0]} | Att: {currentEvent["Attended"].values[0]} | Rate: {round(currentEvent["Attended"].values[0] / currentEvent["Registered"].values[0], 2)}')
         plt.xlabel('Date')
         plt.ylabel('# of Registrations')
         plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
